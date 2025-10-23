@@ -34,4 +34,49 @@ public class User {
     )
     private List<Role> roles = new ArrayList<>();   //Cascading is the option whenver we are changing any record of user, then respective record for role
 //will also be changed.
+
+	public String getEmail() {
+		// TODO Auto-generated method stub
+		return this.email;
+	}
+
+	public void setName(String name2) {
+		// TODO Auto-generated method stub
+		this.name = name2;
+	}
+
+	public void setEmail(String email2) {
+		// TODO Auto-generated method stub
+		this.email = email2;
+	}
+
+	public void setPassword(String encode) {
+		// TODO Auto-generated method stub
+		this.password = encode;
+	}
+
+	public void setRoles(List<Role> asList) {
+		// TODO Auto-generated method stub
+		this.roles = asList;
+	}
+
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return this.password;
+	}
+
+	public List<Role> getRoles() {
+		// TODO Auto-generated method stub
+		return this.roles;
+	}
+
+	public Long getId() {
+		// TODO Auto-generated method stub
+		return this.id;
+	}
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return this.name;
+	}
 }

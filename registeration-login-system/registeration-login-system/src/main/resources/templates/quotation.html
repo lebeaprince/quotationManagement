@@ -27,25 +27,35 @@
     </div>
 </nav>
 <div class="containeer">
-    <div class="row col-md-10">
-        <h2>List of Registered Users</h2>
+    <div th:if="${!#lists.isEmpty(quotations)}">
+        <div class="row col-md-10">
+            <h2>List of Quotations</h2>
+        </div>
+        <table class="table table-bordered table-hover">
+            <thread class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                </tr>
+            </thread>
+            <tbody>
+                <tr th:each="quotation : ${quotations}">
+                    <td th:text="${quotation.name}"></td>
+                    <td th:text="${quotation.email}"></td>
+
+
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <table class="table table-bordered table-hover">
-        <thread class="table-dark">
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-            </tr>
-        </thread>
-        <tbody>
-             <tr th:each="user : ${users}">
-                 <td th:text="${user.name}"></td>
-                 <td th:text="${user.email}"></td>
-
-
-             </tr>
-        </tbody>
-    </table>
+    <div th:if="${#lists.isEmpty(quotations)}">
+              <div class="form-group mb-3">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <span>No quotations?
+                      <a th:href="@{/register}">Add quotations here</a>
+                  </span>
+              </div>
+    </div>
 </div>
 </body>
 </html>

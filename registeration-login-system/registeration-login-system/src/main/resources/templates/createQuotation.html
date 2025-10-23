@@ -32,20 +32,20 @@
     <div class="row col-md-8 offset-md-2">
         <div class="card">
             <div class="card-header">
-                <h2 class="text-center">Registration</h2>
+                <h2 class="text-center">Add Quotation(s)</h2>
             </div>
             <div th:if="${param.success}">
                 <div class="alert alert-info">
-                    You have successfully registered our app.!
+                    You have successfully added quotations.
                 </div>
             </div>
             <div class="card-body">
-                <form method="post" role="form" th:action="@{/register/save}"  th:object="${user}" >
+                <form method="post" role="form" th:action="@{/upload}"  th:object="${user}" >
                     <div class="form-group mb-3">
-                        <label class="form-label">Name</label>
-                        <input class="form-control"  id="name" name="name" placeholder="Enter name" th:field="*{name}" type="text"  />
-                        <p th:errors="*{name}" class="text-danger"
-                           th:if="${#fields.hasErrors('name')}"></p>
+                        <label class="form-label">Valid Until</label>
+                        <input class="form-control"  id="ValidUntil" name="name" placeholder="Valid Until" th:field="*{ValidUntil}" type="text"  />
+                        <p th:errors="*{ValidUntil}" class="text-danger"
+                           th:if="${#fields.hasErrors('ValidUntil')}"></p>
                     </div>
                     <div class="form-group mb-3">
                         <label class="form-label">Email</label>

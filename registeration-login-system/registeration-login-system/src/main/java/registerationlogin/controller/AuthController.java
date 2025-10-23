@@ -7,8 +7,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import registerationlogin.dto.QuotationDTO;
 import registerationlogin.dto.UserDto;
 import registerationlogin.entity.User;
+import registerationlogin.service.QuotationService;
 import registerationlogin.service.UserService;
 
 import java.util.List;
@@ -16,16 +19,19 @@ import java.util.List;
 @Controller
 public class AuthController {
     private UserService userService;
+    private QuotationService quotationService;
 
-    public AuthController(UserService userService){
+    public AuthController(UserService userService,QuotationService quotationService){
         this.userService=userService;
+        this.quotationService = quotationService;
     }
 
     //handler method to handle home page.
     @GetMapping("/index")
-    public String home(){
+    public String home(Model model){
+        List<QuotationDTO> qtns = this.quotationService.findAllQuotations();
+        model.addAttribute("quotations",qtns);
         return "index";
-
     }
 
     //handler method to handle user registeration form request.
