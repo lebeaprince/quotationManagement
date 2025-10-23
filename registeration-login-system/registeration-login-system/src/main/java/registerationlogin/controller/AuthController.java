@@ -26,6 +26,11 @@ public class AuthController {
         this.quotationService = quotationService;
     }
 
+    @GetMapping("/")
+    public String root() {
+        return "redirect:/index";
+    }
+
     //handler method to handle home page.
     @GetMapping("/index")
     public String home(Model model){
