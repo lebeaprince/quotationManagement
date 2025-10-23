@@ -159,11 +159,9 @@ xmlns:th="http://www.thymeleaf.org"
         <div class="row col-md-10">
             <h2>Upload Quotation(s)</h2>
         </div>
-        <c:url value="/uploadExcelFile" var="uploadFileUrl" />
-        <form method="post" enctype="multipart/form-data"
-        action="${uploadFileUrl}">
-            <input type="file" name="file" accept=".xls,.xlsx" /> <input
-            type="submit" value="Upload file" />
+        <form method="post" enctype="multipart/form-data" th:action="@{/uploadExcelFile}">
+            <input type="file" name="file" accept=".xls,.xlsx" />
+            <input type="submit" value="Upload file" />
         </form>
     </div>
 </body>
