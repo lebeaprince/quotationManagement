@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
 xmlns:th="http://www.thymeleaf.org"
-
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head>
     <meta charset="UTF-8">
@@ -28,16 +28,14 @@ xmlns:th="http://www.thymeleaf.org"
         </div>
     </nav>
     <br /><br />
-    <div class="containeer" sec:authorize="isAuthenticated()">
+    <div class="container" sec:authorize="isAuthenticated()">
         <div th:if="${!#lists.isEmpty(quotations)}">
             <div class="row col-md-10">
                 <h2>Quotations</h2>
             </div>
             <table class="table table-bordered table-hover">
-                <thread class="table-dark">
+                <thead class="table-dark">
                     <tr>
-                        <th>Name</th>
-                        <th>Email</th>
                         <th>CustomerId</th>
                         <th>DateCreated</th>
                         <th>ValidUntil</th>
@@ -48,20 +46,18 @@ xmlns:th="http://www.thymeleaf.org"
                         <th>CreatedBy</th>       
                         <th>State</th>                                                                                                
                     </tr>
-                </thread>
+                </thead>
                 <tbody>
                     <tr th:each="quotation : ${quotations}">
-                        <td th:text="${quotation.Name}"></td>
-                        <td th:text="${quotation.Email}"></td>
-                        <td th:text="${quotation.CustomerId}"></td>
-                        <td th:text="${quotation.DateCreated}"></td>
-                        <td th:text="${quotation.ValidUntil}"></td>
-                        <td th:text="${quotation.Total}"></td>
-                        <td th:text="${quotation.Discount}"></td>
-                        <td th:text="${quotation.VAT}"></td>
-                        <td th:text="${quotation.Currency}"></td>
-                        <td th:text="${quotation.CreatedBy}"></td>
-                        <td th:text="${quotation.State}"></td>
+                        <td th:text="${quotation.customerId}"></td>
+                        <td th:text="${quotation.dateCreated}"></td>
+                        <td th:text="${quotation.validUntil}"></td>
+                        <td th:text="${quotation.total}"></td>
+                        <td th:text="${quotation.discount}"></td>
+                        <td th:text="${quotation.vat}"></td>
+                        <td th:text="${quotation.currency}"></td>
+                        <td th:text="${quotation.createdBy}"></td>
+                        <td th:text="${quotation.state}"></td>
                         
                     </tr>
                 </tbody>
@@ -71,21 +67,19 @@ xmlns:th="http://www.thymeleaf.org"
             <div class="form-group mb-3">
 
                 <span>
-                    <a th:href="@{/createQuotation}">Add quotations here</a>
+                    <a th:href="@{/index}#upload">Add quotations here</a>
                 </span>
             </div>
         </div>
     </div>
-    <div class="containeer" sec:authorize="isAuthenticated()&&hasRole('ADMIN')">
+    <div class="container" sec:authorize="isAuthenticated()&&hasRole('ADMIN')">
         <div th:if="${!#lists.isEmpty(quotations)}">
             <div class="row col-md-10">
                 <h2>Quotations</h2>
             </div>
             <table class="table table-bordered table-hover">
-                <thread class="table-dark">
+                <thead class="table-dark">
                     <tr>
-                        <th>Name</th>
-                        <th>Email</th>
                         <th>CustomerId</th>
                         <th>DateCreated</th>
                         <th>ValidUntil</th>
@@ -96,20 +90,18 @@ xmlns:th="http://www.thymeleaf.org"
                         <th>CreatedBy</th>       
                         <th>State</th>                                                                                                
                     </tr>
-                </thread>
+                </thead>
                 <tbody>
                     <tr th:each="quotation : ${quotations}">
-                        <td th:text="${quotation.Name}"></td>
-                        <td th:text="${quotation.Email}"></td>
-                        <td th:text="${quotation.CustomerId}"></td>
-                        <td th:text="${quotation.DateCreated}"></td>
-                        <td th:text="${quotation.ValidUntil}"></td>
-                        <td th:text="${quotation.Total}"></td>
-                        <td th:text="${quotation.Discount}"></td>
-                        <td th:text="${quotation.VAT}"></td>
-                        <td th:text="${quotation.Currency}"></td>
-                        <td th:text="${quotation.CreatedBy}"></td>
-                        <td th:text="${quotation.State}"></td>
+                        <td th:text="${quotation.customerId}"></td>
+                        <td th:text="${quotation.dateCreated}"></td>
+                        <td th:text="${quotation.validUntil}"></td>
+                        <td th:text="${quotation.total}"></td>
+                        <td th:text="${quotation.discount}"></td>
+                        <td th:text="${quotation.vat}"></td>
+                        <td th:text="${quotation.currency}"></td>
+                        <td th:text="${quotation.createdBy}"></td>
+                        <td th:text="${quotation.state}"></td>
                         
                     </tr>
                 </tbody>
@@ -119,27 +111,27 @@ xmlns:th="http://www.thymeleaf.org"
             <div class="form-group mb-3">
 
                 <span>
-                    <a th:href="@{/createQuotation}">Add quotations here</a>
+                    <a th:href="@{/index}#upload">Add quotations here</a>
                 </span>
             </div>
         </div>
     </div>
-    <div class="containeer" sec:authorize="isAuthenticated()&&hasRole('ADMIN')">
+    <div class="container" sec:authorize="isAuthenticated()&&hasRole('ADMIN')">
         <div th:if="${!#lists.isEmpty(quotations)}">
             <div class="row col-md-10">
                 <h2>List of Quotations</h2>
             </div>
             <table class="table table-bordered table-hover">
-                <thread class="table-dark">
+                <thead class="table-dark">
                     <tr>
-                        <th>Name</th>
-                        <th>Email</th>
+                        <th>CustomerId</th>
+                        <th>ValidUntil</th>
                     </tr>
-                </thread>
+                </thead>
                 <tbody>
                     <tr th:each="quotation : ${quotations}">
-                        <td th:text="${quotation.name}"></td>
-                        <td th:text="${quotation.email}"></td>
+                        <td th:text="${quotation.customerId}"></td>
+                        <td th:text="${quotation.validUntil}"></td>
 
 
                     </tr>
@@ -149,13 +141,13 @@ xmlns:th="http://www.thymeleaf.org"
         <div th:if="${#lists.isEmpty(quotations)}">
                 <div class="form-group mb-3">
 
-                    <span>No quotations?
-                        <a th:href="@{/createQuotation}">Add quotations here</a>
+                    <span>No quotations? 
+                        <a th:href="@{/index}#upload">Add quotations here</a>
                     </span>
                 </div>
         </div>
     </div>
-    <div class="containeer" sec:authorize="isAuthenticated()">
+    <div class="container" sec:authorize="isAuthenticated()" id="upload">
         <div class="row col-md-10">
             <h2>Upload Quotation(s)</h2>
         </div>
