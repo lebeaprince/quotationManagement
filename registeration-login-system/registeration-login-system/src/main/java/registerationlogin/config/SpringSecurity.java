@@ -29,6 +29,8 @@ public class SpringSecurity {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
+                .requestMatchers("/").permitAll()
+                .requestMatchers("/login").permitAll()
                 .requestMatchers("/register/**").permitAll()
                 .requestMatchers("/index").permitAll()        //For matching http request requests.
                 .requestMatchers("/users").hasRole("ADMIN") //Giving acess for admins role users only.
@@ -38,7 +40,7 @@ public class SpringSecurity {
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/index")
+                                .defaultSuccessUrl("/index", true)
                                 .permitAll()
                 ).logout(
                         logout -> logout
