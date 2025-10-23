@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://thymeleaf.org"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head>
     <meta charset="UTF-8">
-    <title>Quotation Management System/title>
+    <title>Quotation Management System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
@@ -26,22 +27,22 @@
         </div>
     </div>
 </nav>
-<div class="containeer">
+<div class="container" sec:authorize="isAuthenticated()">
     <div th:if="${!#lists.isEmpty(quotations)}">
         <div class="row col-md-10">
             <h2>List of Quotations</h2>
         </div>
         <table class="table table-bordered table-hover">
-            <thread class="table-dark">
+            <thead class="table-dark">
                 <tr>
-                    <th>Name</th>
-                    <th>Email</th>
+                    <th>CustomerId</th>
+                    <th>ValidUntil</th>
                 </tr>
-            </thread>
+            </thead>
             <tbody>
                 <tr th:each="quotation : ${quotations}">
-                    <td th:text="${quotation.name}"></td>
-                    <td th:text="${quotation.email}"></td>
+                    <td th:text="${quotation.customerId}"></td>
+                    <td th:text="${quotation.validUntil}"></td>
 
 
                 </tr>
@@ -50,9 +51,8 @@
     </div>
     <div th:if="${#lists.isEmpty(quotations)}">
               <div class="form-group mb-3">
-                  <button type="submit" class="btn btn-primary">Submit</button>
                   <span>No quotations?
-                      <a th:href="@{/register}">Add quotations here</a>
+                      <a th:href="@{/index}#upload">Add quotations here</a>
                   </span>
               </div>
     </div>
