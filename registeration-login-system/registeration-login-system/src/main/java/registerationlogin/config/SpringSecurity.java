@@ -27,27 +27,23 @@ public class SpringSecurity {
     // configure SecurityFilterChain
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeHttpRequests()
-                .requestMatchers("/").permitAll()
-                .requestMatchers("/login").permitAll()
-                .requestMatchers("/register/**").permitAll()
-                .requestMatchers("/index").permitAll()        //For matching http request requests.
-                .requestMatchers("/users").hasRole("ADMIN") //Giving acess for admins role users only.
-                //.requestMatchers("/users").hasRole("USER")
-                .and()
-                .formLogin(
-                        form -> form
-                                .loginPage("/login")
-                                .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/index", true)
-                                .permitAll()
-                ).logout(
-                        logout -> logout
-                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                                .permitAll()
-
-                );
+        http
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/", "/login", "/register/**", "/index", "/index/**").permitAll()
+                .requestMatchers("/users").hasRole("ADMIN")
+                .anyRequest().authenticated()
+            )
+            .formLogin(form -> form
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/index", true)
+                .permitAll()
+            )
+            .logout(logout -> logout
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .permitAll()
+            );
         return http.build();
     }
 
