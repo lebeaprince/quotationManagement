@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,6 +33,7 @@ public class Attachment implements Serializable{
     private Long CommentId;
     private Date DateCreated;
     private String CreatedBy;
+    @Transient
     private java.io.File File;
     
 	public Attachment(AttachmentDTO dto) {
