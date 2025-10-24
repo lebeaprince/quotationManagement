@@ -31,7 +31,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
     <div class="container" sec:authorize="isAuthenticated()">
         <div th:if="${!#lists.isEmpty(quotations)}">
             <div class="row col-md-10">
-                <h2>Quotations</h2>
+                <h2>Quotations.</h2>
             </div>
             <table class="table table-bordered table-hover">
                 <thead class="table-dark">
@@ -55,14 +55,15 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
                         <td th:text="${quotation.validUntil}"></td>
                         <td th:text="${quotation.total}"></td>
                         <td th:text="${quotation.discount}"></td>
-                        <td th:text="${quotation.vat}"></td>
+                        <td th:text="${quotation.discount}"></td>
                         <td th:text="${quotation.currency}"></td>
                         <td th:text="${quotation.createdBy}"></td>
                         <td th:text="${quotation.state}"></td>
                         <td>
-                            <a th:href="@{'/quotation/' + ${quotation.id} + '/review'}"
+                            <a sec:authorize="isAuthenticated()" th:href="@{'/quotation/' + ${quotation.id} + '/review'}"
                                class="btn btn-sm btn-outline-primary"
-                               sec:authorize="hasAnyRole('ADMIN','SUPER')">Review</a>
+                               >Review</a>
+                                                             
                         </td>
                     </tr>
                 </tbody>
@@ -80,7 +81,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
     <div class="container" sec:authorize="isAuthenticated()&&hasRole('ADMIN')">
         <div th:if="${!#lists.isEmpty(quotations)}">
             <div class="row col-md-10">
-                <h2>Quotations</h2>
+                <h2>Quotations..</h2>
             </div>
             <table class="table table-bordered table-hover">
                 <thead class="table-dark">
@@ -104,7 +105,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
                         <td th:text="${quotation.validUntil}"></td>
                         <td th:text="${quotation.total}"></td>
                         <td th:text="${quotation.discount}"></td>
-                        <td th:text="${quotation.vat}"></td>
+                        <td th:text="${quotation.discount}"></td>
                         <td th:text="${quotation.currency}"></td>
                         <td th:text="${quotation.createdBy}"></td>
                         <td th:text="${quotation.state}"></td>
