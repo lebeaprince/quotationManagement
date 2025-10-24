@@ -1,5 +1,6 @@
 package registerationlogin.controller;
 
+import java.io.Console;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -93,9 +94,12 @@ public String uploadFile(Model model, @RequestParam("file") MultipartFile file) 
                 QuotationDTO dto = new QuotationDTO();
 
                 // Required fields
-                Long customerId = getLong(row, headerIndex.get("customerid"));
-                java.sql.Date validUntil = getSqlDate(row, headerIndex.get("validuntil"));
+                Long customerId = getLong(row, headerIndex.get("customer_id"));
+                  
+                java.sql.Date validUntil = getSqlDate(row, headerIndex.get("valid_until"));
+ 
                 Double total = getDouble(row, headerIndex.get("total"));
+
 
                 if (customerId == null || validUntil == null || total == null) {
                     skipCount++;
@@ -107,25 +111,39 @@ public String uploadFile(Model model, @RequestParam("file") MultipartFile file) 
                 dto.setTotal(total);
 
                 // Optional fields
-                java.sql.Date dateCreated = getSqlDate(row, headerIndex.get("datecreated"));
+                java.sql.Date dateCreated = getSqlDate(row, headerIndex.get("date_created"));
+
                 if (dateCreated != null) dto.setDateCreated(dateCreated);
 
                 Double discount = getDouble(row, headerIndex.get("discount"));
+           
                 if (discount != null) dto.setDiscount(discount);
 
                 Double vat = getDouble(row, headerIndex.get("vat"));
+
                 if (vat != null) dto.setVAT(vat);
 
                 String currency = getString(row, headerIndex.get("currency"));
+       
                 if (currency != null) dto.setCurrency(currency);
 
-                String createdBy = getString(row, headerIndex.get("createdby"));
+                String createdBy = getString(row, headerIndex.get("created_by"));
+        
                 if (createdBy != null) dto.setCreatedBy(createdBy);
 
-                QuoatationState state = getState(row, headerIndex.get("state"));
+                QuoatationState state = QuoatationState.Pending;
+                if(total < 500000){
+                    state = QuoatationState.Approved;
+                }
+                if(total > 500000){
+                    state = QuoatationState.Approved;
+                }
+
                 if (state != null) dto.setState(state);
 
                 service.saveQuotation(dto);
+                System.out.println("saveQuotation successful::::::::: ");
+
                 successCount++;
             } catch (Exception ex) {
                 skipCount++;
