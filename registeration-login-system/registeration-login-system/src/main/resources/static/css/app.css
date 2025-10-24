@@ -1,0 +1,11 @@
+/* Sidebar layout enhancements */
+.spa-sidebar .accordion-button { font-weight: 600; }
+.spa-sidebar .accordion-button:focus { box-shadow: none; }
+.spa-sidebar .link-dark { text-decoration: none; }
+.spa-sidebar .link-dark:hover { text-decoration: underline; }
+
+/* Views spacing */
+.spa-main h2 { margin-bottom: 1rem; }
+
+/* Modal content tweaks */
+.modal .table th, .modal .table td { vertical-align: middle; }
