@@ -44,7 +44,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
                         <th>VAT</th>
                         <th>Currency</th>
                         <th>CreatedBy</th>       
-                        <th>State</th>                                                                                                
+                        <th>State</th>
+                        <th></th>                                                                                                
                     </tr>
                 </thead>
                 <tbody>
@@ -54,11 +55,15 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
                         <td th:text="${quotation.validUntil}"></td>
                         <td th:text="${quotation.total}"></td>
                         <td th:text="${quotation.discount}"></td>
-                        <td th:text="${quotation.discount}"></td>
+                        <td th:text="${quotation.vat}"></td>
                         <td th:text="${quotation.currency}"></td>
                         <td th:text="${quotation.createdBy}"></td>
                         <td th:text="${quotation.state}"></td>
-                        
+                        <td>
+                            <a th:href="@{'/quotation/' + ${quotation.id} + '/review'}"
+                               class="btn btn-sm btn-outline-primary"
+                               sec:authorize="hasAnyRole('ADMIN','SUPER')">Review</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -88,7 +93,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
                         <th>VAT</th>
                         <th>Currency</th>
                         <th>CreatedBy</th>       
-                        <th>State</th>                                                                                                
+                        <th>State</th>
+                        <th></th>                                                                                                
                     </tr>
                 </thead>
                 <tbody>
@@ -98,11 +104,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
                         <td th:text="${quotation.validUntil}"></td>
                         <td th:text="${quotation.total}"></td>
                         <td th:text="${quotation.discount}"></td>
-                        <td th:text="${quotation.discount}"></td>
+                        <td th:text="${quotation.vat}"></td>
                         <td th:text="${quotation.currency}"></td>
                         <td th:text="${quotation.createdBy}"></td>
                         <td th:text="${quotation.state}"></td>
-                        
+                        <td>
+                            <a th:href="@{'/quotation/' + ${quotation.id} + '/review'}" class="btn btn-sm btn-outline-primary">Review</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>

@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -33,6 +34,9 @@ import registerationlogin.dto.QuotationDTO;
 import registerationlogin.service.QuotationService;
 import registerationlogin.service.UserService;
 import registerationlogin.entity.Enums.QuoatationState;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.GrantedAuthority;
 
 @Controller
 public class QuotationController {
@@ -52,6 +56,85 @@ public class QuotationController {
         model.addAttribute("quotations",dtoList);
         return "quotation";
     }	
+
+    private boolean hasRole(Authentication authentication, String roleName) {
+        if (authentication == null) return false;
+        for (GrantedAuthority authority : authentication.getAuthorities()) {
+            if (authority.getAuthority().equals(roleName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String requiredRoleFor(QuotationDTO dto) {
+        double total = dto.getTotal();
+        if (total > 1000000) {
+            return "ROLE_SUPER";
+        }
+        if (total >= 500000) {
+            return "ROLE_ADMIN";
+        }
+        return null; // auto-approved tier
+    }
+
+    @GetMapping("/quotation/{id}/review")
+    public String reviewQuotation(@PathVariable("id") Long id, Model model) {
+        QuotationDTO dto = service.findDtoById(id);
+        if (dto == null) {
+            return "redirect:/index?error=Quotation%20not%20found";
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String requiredRole = requiredRoleFor(dto);
+        boolean canApprove;
+        if (requiredRole == null) {
+            canApprove = false; // nothing to approve for auto-approve tier
+        } else {
+            canApprove = hasRole(auth, requiredRole);
+        }
+        model.addAttribute("quotation", dto);
+        model.addAttribute("requiredRole", requiredRole);
+        model.addAttribute("canApprove", canApprove);
+        return "approval";
+    }
+
+    @PostMapping("/quotation/{id}/approve")
+    public String approveQuotation(@PathVariable("id") Long id, Model model) {
+        QuotationDTO dto = service.findDtoById(id);
+        if (dto == null) {
+            return "redirect:/index?error=Quotation%20not%20found";
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String requiredRole = requiredRoleFor(dto);
+        if (requiredRole == null) {
+            // Below threshold; already auto-approved at creation. No action.
+            return "redirect:/index?info=No%20approval%20required";
+        }
+        if (!hasRole(auth, requiredRole)) {
+            return "redirect:/quotation/" + id + "/review?error=Insufficient%20permissions";
+        }
+        service.updateQuotationState(id, QuoatationState.Approved);
+        return "redirect:/index?approved=" + id;
+    }
+
+    @PostMapping("/quotation/{id}/decline")
+    public String declineQuotation(@PathVariable("id") Long id, Model model) {
+        QuotationDTO dto = service.findDtoById(id);
+        if (dto == null) {
+            return "redirect:/index?error=Quotation%20not%20found";
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String requiredRole = requiredRoleFor(dto);
+        if (requiredRole == null) {
+            // Below threshold; should not be declined via approval page
+            return "redirect:/index?info=No%20approval%20required";
+        }
+        if (!hasRole(auth, requiredRole)) {
+            return "redirect:/quotation/" + id + "/review?error=Insufficient%20permissions";
+        }
+        service.updateQuotationState(id, QuoatationState.Declined);
+        return "redirect:/index?declined=" + id;
+    }
 
 
 @PostMapping("/uploadExcelFile")
@@ -132,10 +215,8 @@ public String uploadFile(Model model, @RequestParam("file") MultipartFile file) 
                 if (createdBy != null) dto.setCreatedBy(createdBy);
 
                 QuoatationState state = QuoatationState.Pending;
-                if(total < 500000){
-                    state = QuoatationState.Approved;
-                }
-                if(total > 500000){
+                // Auto-approve only when total is strictly below 500,000
+                if (total < 500000) {
                     state = QuoatationState.Approved;
                 }
 
