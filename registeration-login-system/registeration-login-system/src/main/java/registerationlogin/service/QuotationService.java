@@ -11,4 +11,8 @@ public interface QuotationService {
     Quotation findById(Long email);
 
     List<QuotationDTO>findAllQuotations();
+
+    Quotation updateQuotationState(Long quotationId, registerationlogin.entity.Enums.QuoatationState newState);
+
+    QuotationDTO findDtoById(Long id);
 }
