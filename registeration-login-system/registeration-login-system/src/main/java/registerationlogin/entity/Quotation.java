@@ -1,5 +1,6 @@
 package registerationlogin.entity;
 import jakarta.persistence.*;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,10 +43,13 @@ public class Quotation implements Serializable {
     
     private String CreatedBy;
     
+    @Transient
     private List<Product> Products;
     
+    @Transient
     private List<Comment> Comments;
     
+    @Enumerated(EnumType.STRING)
     private QuoatationState State;
     
     public Quotation(QuotationDTO dto) {

@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,6 +35,7 @@ public class Comment implements Serializable {
     private Long QuotationId;
     private Date DateCreated;
     private String CreatedBy;
+    @Transient
     private java.io.File File;
     
     public Comment(CommentDTO dto) {
