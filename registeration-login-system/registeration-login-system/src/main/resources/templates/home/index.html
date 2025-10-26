@@ -42,64 +42,6 @@
     </aside>
 
     <main class="main p-3">
-        <section sec:authorize="isAuthenticated()">
-            <div th:if="${!#lists.isEmpty(quotations)}">
-                <div class="row">
-                    <div class="col">
-                        <h2>Quotations</h2>
-                    </div>
-                </div>
-                <div id="quotations-table-container">
-                    <table class="table table-bordered table-hover">
-                        <thead class="table-dark">
-                        <tr>
-                            <th>CustomerId</th>
-                            <th>DateCreated</th>
-                            <th>ValidUntil</th>
-                            <th>Total</th>
-                            <th>Discount</th>
-                            <th>VAT</th>
-                            <th>Currency</th>
-                            <th>CreatedBy</th>
-                            <th>State</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="quotation : ${quotations}">
-                            <td th:text="${quotation.customerId}"></td>
-                            <td th:text="${quotation.dateCreated}"></td>
-                            <td th:text="${quotation.validUntil}"></td>
-                            <td th:text="${quotation.total}"></td>
-                            <td th:text="${quotation.discount}"></td>
-                            <td th:text="${quotation.discount}"></td>
-                            <td th:text="${quotation.currency}"></td>
-                            <td th:text="${quotation.createdBy}"></td>
-                            <td th:text="${quotation.state}"></td>
-                            <td>
-                                <a th:href="@{'/quotation/' + ${quotation.id} + '/review'}" class="btn btn-sm btn-outline-primary">Review</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <section id="upload" class="mt-4" sec:authorize="isAuthenticated()">
-            <div class="row">
-                <div class="col">
-                    <h2>Upload Quotation(s)</h2>
-                </div>
-            </div>
-            <form method="post" enctype="multipart/form-data" th:action="@{/uploadExcelFile}">
-                <div class="d-flex flex-wrap align-items-center gap-2">
-                    <input type="file" name="file" accept=".xls,.xlsx" class="form-control w-auto" />
-                    <input type="submit" value="Upload file" class="btn btn-primary" />
-                </div>
-            </form>
-        </section>
-
         <section class="mt-4" sec:authorize="!isAuthenticated()">
             <div class="alert alert-info">Please log in to access the application.</div>
         </section>
