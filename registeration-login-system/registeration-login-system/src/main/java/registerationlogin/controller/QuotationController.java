@@ -54,7 +54,7 @@ public class QuotationController {
     public String quotations(Model model){
         List<QuotationDTO> dtoList = service.findAllQuotations();
         model.addAttribute("quotations",dtoList);
-        return "quotation";
+        return "quotation/list";
     }	
 
     private boolean hasRole(Authentication authentication, String roleName) {
@@ -95,7 +95,7 @@ public class QuotationController {
         model.addAttribute("quotation", dto);
         model.addAttribute("requiredRole", requiredRole);
         model.addAttribute("canApprove", canApprove);
-        return "approval";
+        return "quotation/approval";
     }
 
     @PostMapping("/quotation/{id}/approve")

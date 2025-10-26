@@ -36,7 +36,7 @@ public class AuthController {
     public String home(Model model){
         List<QuotationDTO> qtns = this.quotationService.findAllQuotations();
         model.addAttribute("quotations",qtns);
-        return "index";
+        return "home/index";
     }
 
     //handler method to handle user registeration form request.
@@ -46,7 +46,7 @@ public class AuthController {
 
         UserDto userDto = new UserDto();
         model.addAttribute("user",userDto); //model object is used to store data that is entered from form.
-        return "register";
+        return "auth/register";
 
     }
     //handler method to handle user registration form submit request.
@@ -63,7 +63,7 @@ public class AuthController {
 
         if(result.hasErrors()){
             model.addAttribute("user",userDto);
-            return "/register"; // if any form has errors it will be redirected to register page only.
+            return "auth/register"; // if any form has errors it will be redirected to register page only.
         }
 
         userService.saveUser(userDto);
@@ -76,14 +76,14 @@ public class AuthController {
     public String users(Model model){
         List<UserDto> users = userService.findAllUsers();
         model.addAttribute("users",users);
-        return "users";
+        return "user/list";
     }
 
     //handler methods for handling login request.
 
     @GetMapping("/login")
     public String login(){
-        return "login";
+        return "auth/login";
     }
 
 }
