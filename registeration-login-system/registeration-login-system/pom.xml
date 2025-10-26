@@ -60,6 +60,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		<!-- OAuth2 Client for OIDC (Microsoft Entra ID) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-client</artifactId>
+		</dependency>
 		<!-- Thymeleaf extras for Spring Security dialect (sec:authorize, etc.) -->
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
