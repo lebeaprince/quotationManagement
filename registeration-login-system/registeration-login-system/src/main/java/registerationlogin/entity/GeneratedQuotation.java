@@ -22,34 +22,34 @@ public class GeneratedQuotation implements Serializable {
     private Long id;
 
     @Column(nullable = false)
-    private Long QuotationId;
+    private Long quotationId;
 
     @Column(nullable = false)
-    private Long CustomerId;
+    private Long customerId;
 
-    private Date DateCreated;
-
-    @Column(nullable = false)
-    private Date ValidUntil;
+    private Date dateCreated;
 
     @Column(nullable = false)
-    private double Total;
+    private Date validUntil;
 
-    private double Discount;
+    @Column(nullable = false)
+    private double total;
 
-    private double VAT;
+    private double discount;
 
-    private String Currency;
+    private double vat;
 
-    private String CreatedBy;
+    private String currency;
+
+    private String createdBy;
 
     // Extra fields for generated letter
-    private String AcceptedBy;
+    private String acceptedBy;
 
-    private Timestamp AcceptedAt;
+    private Timestamp acceptedAt;
 
     @Column(unique = true)
-    private String LetterNumber;
+    private String letterNumber;
 
     public static GeneratedQuotation fromQuotation(Quotation quotation, String acceptedBy) {
         GeneratedQuotation gq = new GeneratedQuotation();
@@ -59,7 +59,7 @@ public class GeneratedQuotation implements Serializable {
         gq.setValidUntil(quotation.getValidUntil());
         gq.setTotal(quotation.getTotal());
         gq.setDiscount(quotation.getDiscount());
-        gq.setVAT(quotation.getVAT());
+        gq.setVat(quotation.getVAT());
         gq.setCurrency(quotation.getCurrency());
         gq.setCreatedBy(quotation.getCreatedBy());
         gq.setAcceptedBy(acceptedBy);
