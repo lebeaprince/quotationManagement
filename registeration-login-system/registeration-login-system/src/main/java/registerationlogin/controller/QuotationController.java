@@ -33,6 +33,8 @@ import registerationlogin.dto.QuotationDTO;
 
 import registerationlogin.service.QuotationService;
 import registerationlogin.service.UserService;
+import registerationlogin.service.GeneratedQuotationService;
+import registerationlogin.entity.GeneratedQuotation;
 import registerationlogin.entity.Enums.QuoatationState;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,11 +45,14 @@ public class QuotationController {
 
     private QuotationService service;
     private UserService userService;
-	
-	public QuotationController(QuotationService srvc, UserService us) {
-		this.service = srvc;
+    private GeneratedQuotationService generatedQuotationService;
+
+    public QuotationController(QuotationService srvc, UserService us,
+                               GeneratedQuotationService gqs) {
+        this.service = srvc;
         this.userService = us;
-	}
+        this.generatedQuotationService = gqs;
+    }
 
     //handler methods for getting list of quotations.
     @GetMapping("/quotation")
@@ -114,6 +119,12 @@ public class QuotationController {
             return "redirect:/quotation/" + id + "/review?error=Insufficient%20permissions";
         }
         service.updateQuotationState(id, QuoatationState.Approved);
+        // Create and redirect to the generated quotation letter
+        String acceptedBy = auth != null ? auth.getName() : "system";
+        GeneratedQuotation letter = generatedQuotationService.createFromQuotationId(id, acceptedBy);
+        if (letter != null) {
+            return "redirect:/letters/" + letter.getId();
+        }
         return "redirect:/index?approved=" + id;
     }
 
